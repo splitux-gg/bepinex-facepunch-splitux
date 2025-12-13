@@ -1,0 +1,22 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# Reference DLLs (copy from game for building)
+deps/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# NuGet
+packages/
+*.nupkg
+
+# OS
+.DS_Store
+Thumbs.db
