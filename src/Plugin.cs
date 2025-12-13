@@ -10,7 +10,7 @@ namespace SplituxFacepunch
     {
         public const string PluginGuid = "gg.splitux.facepunch";
         public const string PluginName = "SplituxFacepunch";
-        public const string PluginVersion = "2.0.0";
+        public const string PluginVersion = "2.1.0";
 
         internal static ManualLogSource Log;
         internal static SplituxConfig SplituxCfg;
@@ -66,7 +66,23 @@ namespace SplituxFacepunch
             }
 
             // ========================
-            // Apply runtime_patches (game-specific targets)
+            // Apply game-specific patches (ATO and similar games)
+            // ========================
+
+            // SteamManager patches - force steamLoaded=true after DoSteam() caches values
+            Log.LogInfo("Applying SteamManager patches...");
+            SteamManagerPatch.Apply(_harmony, SplituxCfg);
+
+            // NetworkManager patches - force DisableSteamAuthorizationForPhoton=true
+            Log.LogInfo("Applying NetworkManager patches...");
+            NetworkManagerPatch.Apply(_harmony);
+
+            // SteamAuthTicket patches - return fake ticket (Steam rejects 2nd ticket from same account)
+            Log.LogInfo("Applying SteamAuthTicket patches...");
+            SteamAuthTicketPatch.Apply(_harmony, SplituxCfg);
+
+            // ========================
+            // Apply runtime_patches (game-specific targets from config)
             // ========================
 
             RuntimePatcher.ApplyAll(_harmony, SplituxCfg.RuntimePatches);
