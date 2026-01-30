@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: [self-hosted, Linux, X64, default]
+    runs-on: [self-hosted, Linux, X64, splitux]
 
     steps:
     - uses: actions/checkout@v4
